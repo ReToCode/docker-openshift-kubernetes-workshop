@@ -72,13 +72,13 @@ https://192.168.1.74:8443/console # use IP of your VM
 ## Deploy your own app
 ```bash
 oc project myproject
-oc new-app oc new-app retocode/web-app:v1
+oc new-app retocode/web-app:v1
 oc expose service web-app
 
 # Click on the link in the Web-GUI: http://web-app-myproject.192.168.1.74.nip.io/
 
 # Add environment variables
-oc set env dc/web-app VERSION=v1oc env 
+oc set env dc/web-app VERSION=v1
 
 # Deployment will be triggered (see it working in the Web-GUI)
 # Check the output of http://web-app-myproject.192.168.1.74.nip.io/ again

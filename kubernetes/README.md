@@ -69,13 +69,18 @@ Kubernetes Dashboard from:
 https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/#welcome-view
 
 ```bash
-kubectl apply -f https://raw.githubusercontent.com/ReToCode/docker-paas/tree/master/kubernetes/kube-dashboard.yaml
+kubectl apply -f https://raw.githubusercontent.com/ReToCode/docker-paas/master/kubernetes/kube-dashboard.yaml
+
+# Wait until all containers are running
+kubectl get all -n kube-system
 
 # Access the dashboard using kube-proxy
-kubectl proxy
+kubectl proxy --address='192.168.1.81' --accept-hosts='.*'
 
 # Open the Dashboard on
-http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/
+http://192.168.1.81:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/#!/login
+
+# Click 'Skip'
 ```
 
 ## Optional: NFS autoprovisioning

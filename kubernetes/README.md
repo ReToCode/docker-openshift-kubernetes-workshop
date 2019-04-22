@@ -64,7 +64,7 @@ kubectl get svc # look for 3000:30xxx/TCP entry
 http://192.168.1.85:30679
 ```
 
-## Optional: Kubernetes Dashboard (GUI)
+## Kubernetes Dashboard (GUI)
 Kubernetes Dashboard from:
 https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/#welcome-view
 
@@ -120,18 +120,12 @@ watch kubectl get pvc
 # Create a pod with a persistent volume mount
 kubectl apply -f https://raw.githubusercontent.com/ReToCode/docker-paas/master/kubernetes/pod-with-pv.yaml
 
-# Write data in the persistent volume (using oc rsh or the terminal in the Web-GUI)
+# "SSH" into the new pod
+kubectl exec -it task-pv-pod -- /bin/sh
+
+# Write data in the persistent volume
 echo '<h1>Hello World</h1>' > /usr/share/nginx/html/index.html
 
 # See /pvs on the NFS server
-ls /pvs/
-
-```
-
-## Optional: Setup ingress traffic
-In Kubernetes you can use 'ingress' objects to expose services. Traefik acts as a ingress-gateway for those objects.
-```bash
-# Setup traefik
-
-
+ls /pvs/xxx/index.html
 ```

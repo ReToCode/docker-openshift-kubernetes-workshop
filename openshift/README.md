@@ -1,6 +1,9 @@
-# Preparation
+# OpenShift Hands On
+
+## Preparation
 ```bash
 - 1x VM 4 CPU, 6 GB Memory, 8 GB Disk Space
+- Docker setup from https://github.com/ReToCode/docker-paas/tree/master/docker
 ```
 
 ```bash
@@ -17,7 +20,7 @@ sudo systemctl daemon-reload
 sudo systemctl restart docker
 ```
 
-# Start OpenShift
+## Start OpenShift
 ```bash
 
 # Get and extract OpenShift binaries
@@ -30,10 +33,11 @@ sudo mv openshift-origin-client-tools-v3.11.0-0cbc58b-linux-64bit/oc openshift-o
 oc cluster up --routing-suffix=192.168.1.74.nip.io --public-hostname=192.168.1.74 --enable=service-catalog,router,registry,web-console,persistent-volumes,rhel-imagestreams
 
 # More permissions for 'developer' account
+oc login -u system:admin
 oc adm policy add-cluster-role-to-user cluster-admin developer
 ```
 
-# Accessing OpenShift
+## Accessing OpenShift
 ```bash
 # Use the command line
 oc login --server=https://192.168.1.74:8443 # use IP of your VM
@@ -45,15 +49,37 @@ oc login --server=https://192.168.1.74:8443 # use IP of your VM
 # If you use your own computer -> download oc client from https://www.okd.io/download.html
 
 # Using Web-GUI:
-https://192.168.1.74:8443 # use IP of your VM
+https://192.168.1.74:8443/console # use IP of your VM
 
 # More info on the Web-GUI: https://docs.okd.io/latest/getting_started/developers_console.html
 
 ```
 
-# Take a look at the OpenShift projects
+## Take a look at the OpenShift projects
 ```bash
 # Interesting projects
 - default
-- 
+- kube-dns
+- kube-proxy
+- kube-system
+- openshift-apiserver
+- openshift-controller-manager
+- openshift-core-operators
+- openshift-service-cert-signer
+- openshift-web-console
+```
+
+## Deploy your own app
+```bash
+oc project myproject
+oc new-app oc new-app retocode/web-app:v1
+oc expose service web-app
+
+# Click on the link in the Web-GUI: http://web-app-myproject.192.168.1.74.nip.io/
+
+# Add environment variables
+oc set env dc/web-app VERSION=v1oc env 
+
+# Deployment will be triggered (see it working in the Web-GUI)
+# Check the output of http://web-app-myproject.192.168.1.74.nip.io/ again
 ```

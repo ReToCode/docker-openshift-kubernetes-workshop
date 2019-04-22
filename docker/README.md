@@ -1,4 +1,6 @@
-# Docker installation
+# Docker Hands On
+
+## Docker installation
 ```bash
 # Install docker using get.docker.io
 
@@ -8,8 +10,6 @@ sudo usermod -aG docker $USER
 
 # Logout and login to get new groups
 ```
-
-# Docker hands on
 
 ## Build a docker image
 ```bash

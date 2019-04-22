@@ -80,15 +80,27 @@ kubectl proxy --address='192.168.1.81' --accept-hosts='.*'
 # Open the Dashboard on
 http://192.168.1.81:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/#!/login
 
-# Click 'Skip'
+# Click 'Skip' on login
 ```
 
 ## Optional: NFS autoprovisioning
 You can use an existing VM for this, or create a new VM that acts as a NFS server.
 ```bash
 # NFS server setup
+sudo apt-get install nfs-kernel-server nfs-common
+sudo systemctl enable nfs-kernel-server
+sudo mkdir /pvs/
+# Add following like to /etc/exports
+/pvs/ 192.168.1.1/255.255.0.0(rw,sync,no_subtree_check,no_root_squash)
+sudo exportfs -a
 
 # Auto provisioning in Kubernetes
+wget 
+
+# Replace IP with IP of your NFS server
+kubectl apply -f 
+
+# Test the setup
 
 ```
 

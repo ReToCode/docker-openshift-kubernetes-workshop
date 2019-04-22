@@ -5,7 +5,7 @@ metadata:
 subjects:
   - kind: ServiceAccount
     name: nfs-client-provisioner
-    namespace: kube-system
+    namespace: default
 roleRef:
   kind: ClusterRole
   name: nfs-client-provisioner-runner
@@ -42,7 +42,7 @@ apiVersion: extensions/v1beta1
 metadata:
   name: nfs-client-provisioner
 spec:
-  replicas: 1
+  replicas: 2
   strategy:
     type: Recreate
   template:

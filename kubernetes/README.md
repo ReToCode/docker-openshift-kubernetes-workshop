@@ -114,11 +114,18 @@ watch kubectl get po
 # Create a persistent volume claim
 kubectl apply -f https://raw.githubusercontent.com/ReToCode/docker-paas/master/kubernetes/pvc.yaml
 
-# Mount the persistent volume in the web-app
+# Wait until the provisioner created a persistent volume
+watch kubectl get pvc
 
-# Write data in the persistent volume
+# Create a pod with a persistent volume mount
+kubectl apply -f https://raw.githubusercontent.com/ReToCode/docker-paas/master/kubernetes/pod-with-pv.yaml
+
+# Write data in the persistent volume (using oc rsh or the terminal in the Web-GUI)
+echo '<h1>Hello World</h1>' > /usr/share/nginx/html/index.html
 
 # See /pvs on the NFS server
+ls /pvs/
+
 ```
 
 ## Optional: Setup ingress traffic

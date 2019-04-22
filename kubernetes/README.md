@@ -4,7 +4,7 @@
 ```bash
 - 1x VM 4 CPU, 6 GB Memory, 8 GB Disk Space # Master
 - 2x VM 2 CPU, 4 GB Memory, 8 GB Disk Space # Nodes
-- Docker setup from https://github.com/ReToCode/docker-paas/tree/master/docker
+- Docker setup from https://github.com/ReToCode/docker-openshift-kubernetes-workshop/tree/master/docker
 ```
 
 ## VM preparation
@@ -69,7 +69,7 @@ Kubernetes Dashboard from:
 https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/#welcome-view
 
 ```bash
-kubectl apply -f https://raw.githubusercontent.com/ReToCode/docker-paas/master/kubernetes/kube-dashboard.yaml
+kubectl apply -f https://raw.githubusercontent.com/ReToCode/docker-openshift-kubernetes-workshop/master/kubernetes/kube-dashboard.yaml
 
 # Wait until all containers are running
 kubectl get all -n kube-system
@@ -101,7 +101,7 @@ sudo systemctl start nfs-kernel-server
 sudo exportfs -a
 
 # Auto provisioning in Kubernetes
-wget https://raw.githubusercontent.com/ReToCode/docker-paas/master/kubernetes/nfs.yaml
+wget https://raw.githubusercontent.com/ReToCode/docker-openshift-kubernetes-workshop/master/kubernetes/nfs.yaml
 
 # Replace the two occurences of NFS server IP with the IP of your NFS server
 kubectl apply -f nfs.yaml
@@ -112,13 +112,13 @@ watch kubectl get po
 
 # Test the setup
 # Create a persistent volume claim
-kubectl apply -f https://raw.githubusercontent.com/ReToCode/docker-paas/master/kubernetes/pvc.yaml
+kubectl apply -f https://raw.githubusercontent.com/ReToCode/docker-openshift-kubernetes-workshop/master/kubernetes/pvc.yaml
 
 # Wait until the provisioner created a persistent volume
 watch kubectl get pvc
 
 # Create a pod with a persistent volume mount
-kubectl apply -f https://raw.githubusercontent.com/ReToCode/docker-paas/master/kubernetes/pod-with-pv.yaml
+kubectl apply -f https://raw.githubusercontent.com/ReToCode/docker-openshift-kubernetes-workshop/master/kubernetes/pod-with-pv.yaml
 
 # "SSH" into the new pod
 kubectl exec -it task-pv-pod -- /bin/sh

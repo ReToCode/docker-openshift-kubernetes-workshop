@@ -86,22 +86,39 @@ http://192.168.1.81:8001/api/v1/namespaces/kube-system/services/https:kubernetes
 ## Optional: NFS autoprovisioning
 You can use an existing VM for this, or create a new VM that acts as a NFS server.
 ```bash
+# On all master/node servers install nfs-common
+sudo apt install nfs-common
+
 # NFS server setup
 sudo apt-get install nfs-kernel-server nfs-common
 sudo systemctl enable nfs-kernel-server
 sudo mkdir /pvs/
-# Add following like to /etc/exports
+
+# Add following line to /etc/exports
 /pvs/ 192.168.1.1/255.255.0.0(rw,sync,no_subtree_check,no_root_squash)
+
+sudo systemctl start nfs-kernel-server
 sudo exportfs -a
 
 # Auto provisioning in Kubernetes
-wget 
+wget https://raw.githubusercontent.com/ReToCode/docker-paas/master/kubernetes/nfs.yaml
 
-# Replace IP with IP of your NFS server
-kubectl apply -f 
+# Replace the two occurences of NFS server IP with the IP of your NFS server
+kubectl apply -f nfs.yaml
+kubectl patch storageclass kube-nfs -p '{"metadata":{"annotations": {"storageclass.kubernetes.io/is-default-class": "true"}}}'
+
+# Wait until the provisioner is running
+watch kubectl get po
 
 # Test the setup
+# Create a persistent volume claim
+kubectl apply -f https://raw.githubusercontent.com/ReToCode/docker-paas/master/kubernetes/pvc.yaml
 
+# Mount the persistent volume in the web-app
+
+# Write data in the persistent volume
+
+# See /pvs on the NFS server
 ```
 
 ## Optional: Setup ingress traffic

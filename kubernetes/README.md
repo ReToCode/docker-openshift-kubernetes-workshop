@@ -12,7 +12,7 @@ Run this on all three VMs
 ```bash
 # Make sure SWAP is disabled
 # remove /swapfile row in /etc/fstab
-# sudo reboot
+# sudo swapoff /swapfile
 
 # Install Kubernetes packages
 curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add - && \

@@ -6,25 +6,31 @@
 - Docker setup from https://github.com/ReToCode/docker-openshift-kubernetes-workshop/tree/master/docker
 ```
 
+Edit docker daemon config
 ```bash
-# Docker config
 sudo mkdir -p /etc/systemd/system/docker.service.d
+```
 
-# Add this to /etc/systemd/system/docker.service.d/override.conf
+Add the following to `/etc/systemd/system/docker.service.d/override.conf`
+```
 [Service]
 ExecStart=
 ExecStart=/usr/bin/dockerd -H fd:// --insecure-registry 172.30.0.0/16
+```
 
-# Restart docker
+Restart docker
+```bash
 sudo systemctl daemon-reload 
 sudo systemctl restart docker
 ```
 
 ## Start OpenShift
 ```bash
-
 # Get and extract OpenShift binaries
 wget https://github.com/openshift/origin/releases/download/v3.11.0/openshift-origin-client-tools-v3.11.0-0cbc58b-linux-64bit.tar.gz
+
+# Unpack archive
+tar xf openshift-origin-client-tools-v3.11.0-0cbc58b-linux-64bit.tar.gz
 
 # Use oc client
 sudo mv openshift-origin-client-tools-v3.11.0-0cbc58b-linux-64bit/oc openshift-origin-client-tools-v3.11.0-0cbc58b-linux-64bit/kubectl /usr/local/bin/

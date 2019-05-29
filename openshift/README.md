@@ -45,20 +45,14 @@ oc adm policy add-cluster-role-to-user cluster-admin developer
 
 ## Accessing OpenShift
 ```bash
-# Use the command line
-oc login --server=https://192.168.1.74:8443 # use IP of your VM
-- username: developer
-- password: anything will work
-
+# Using the OpenShift-CLI "$ oc"
+# On the server where you set up OpenShift you are automatically logged in
 # More info on the CLI: https://docs.okd.io/latest/getting_started/developers_cli.html
-
-# If you use your own computer -> download oc client from https://www.okd.io/download.html
 
 # Using Web-GUI:
 https://192.168.1.74:8443/console # use IP of your VM
 
 # More info on the Web-GUI: https://docs.okd.io/latest/getting_started/developers_console.html
-
 ```
 
 ## Take a look at the OpenShift projects

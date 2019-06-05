@@ -2,7 +2,7 @@
 
 ## Preparation
 ```bash
-- 1x VM 4 CPU, 6 GB Memory, 8 GB Disk Space
+- 1x VM 4 CPU, 6 GB Memory, 12 GB Disk Space
 - Docker setup from https://github.com/ReToCode/docker-openshift-kubernetes-workshop/tree/master/docker
 ```
 

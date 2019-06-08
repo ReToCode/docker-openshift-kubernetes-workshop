@@ -6,7 +6,7 @@ const hostname = '0.0.0.0';
 const server = http.createServer((req, res) => {
   res.statusCode = 200;
   res.setHeader('Content-Type', 'text/plain');
-  res.end('Hello from Application \n' + process.env.VERSION);
+  res.end('Hello from Application \n' + process.version);
 });
 
 server.listen(port, hostname, () => {

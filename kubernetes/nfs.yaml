@@ -38,11 +38,14 @@ metadata:
   name: nfs-client-provisioner
 ---
 kind: Deployment
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 metadata:
   name: nfs-client-provisioner
 spec:
   replicas: 2
+  selector:
+    matchLabels:
+      app: nfs-client-provisioner 
   strategy:
     type: Recreate
   template:
@@ -61,7 +64,7 @@ spec:
             - name: PROVISIONER_NAME
               value: kube.provisioner/nfs
             - name: NFS_SERVER
-              value: 192.168.1.90
+              value: 192.168.1.186
             - name: NFS_PATH
               value: /pvs/
       affinity:
@@ -79,7 +82,7 @@ spec:
       volumes:
         - name: nfs-client-root
           nfs:
-            server: 192.168.1.90
+            server: 192.168.1.186
             path: /pvs/
 ---
 apiVersion: storage.k8s.io/v1beta1
@@ -87,5 +90,5 @@ kind: StorageClass
 metadata:
   name: kube-nfs
   annotations:
-    storageclass.kubernetes.io/is-default-class: true
+    storageclass.kubernetes.io/is-default-class: "true"
 provisioner: kube.provisioner/nfs

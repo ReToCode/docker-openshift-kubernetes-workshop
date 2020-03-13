@@ -3,6 +3,8 @@
 ## Docker installation
 ```bash
 # Install docker using get.docker.io
+curl -fsSL https://get.docker.com -o get-docker.sh
+sh get-docker.sh
 
 # Then add current user to docker group
 sudo groupadd docker 

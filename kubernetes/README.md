@@ -40,7 +40,7 @@ kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl versio
 Run this on the two 'node' VMs
 ```bash
 # Join the cluster using the token
-kubeadm join 192.168.1.81:6443 --token xxx --discovery-token-ca-cert-hash sha256:xxx # use IP of your master
+sudo kubeadm join 192.168.1.242:6443 --token xxx --discovery-token-ca-cert-hash sha256:xxx # use IP of your master
 
 # Watch progress
 # On the master you can watch progress with
@@ -49,7 +49,7 @@ watch kubectl get nodes
 
 ## Deploy an app
 ```bash
-kubectl run web-app --generator=deployment/v1beta1 --image=retocode/web-app:v1 --port=3000
+kubectl run web-app --image=retocode/web-app:v1 --port=3000
 
 # Check the pod
 kubectl get pod
@@ -61,7 +61,7 @@ kubectl expose deployment/web-app --type=NodePort --name=web-app
 kubectl get svc # look for 3000:30xxx/TCP entry
 
 # Call the app using a nodes IP and the NodePort
-http://192.168.1.85:30679
+http://192.168.1.201:31109
 ```
 
 ## Kubernetes Dashboard (GUI)
@@ -72,13 +72,13 @@ https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/#we
 kubectl apply -f https://raw.githubusercontent.com/ReToCode/docker-openshift-kubernetes-workshop/master/kubernetes/kube-dashboard.yaml
 
 # Wait until all containers are running
-kubectl get all -n kube-system
+kubectl get po -n kubernetes-dashboard
 
 # Access the dashboard using kube-proxy
-kubectl proxy --address='192.168.1.81' --accept-hosts='.*'
+kubectl proxy --address='192.168.1.242' --accept-hosts='.*'
 
 # Open the Dashboard on
-http://192.168.1.81:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/#!/login
+http://192.168.1.242:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/
 
 # Click 'Skip' on login
 ```
@@ -86,9 +86,11 @@ http://192.168.1.81:8001/api/v1/namespaces/kube-system/services/https:kubernetes
 ## Optional: NFS autoprovisioning
 You can use an existing VM for this, or create a new VM that acts as a NFS server.
 ```bash
-# On all master/node servers install nfs-common
+# ON ALL MASTER/SERVER
+# install nfs-common
 sudo apt install nfs-common
 
+# ON NFS SERVER
 # NFS server setup
 sudo apt-get install nfs-kernel-server nfs-common
 sudo systemctl enable nfs-kernel-server
@@ -100,6 +102,7 @@ sudo mkdir /pvs/
 sudo systemctl start nfs-kernel-server
 sudo exportfs -a
 
+# ON MASTER SERVER
 # Auto provisioning in Kubernetes
 wget https://raw.githubusercontent.com/ReToCode/docker-openshift-kubernetes-workshop/master/kubernetes/nfs.yaml
 

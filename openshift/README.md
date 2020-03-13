@@ -36,7 +36,11 @@ tar xf openshift-origin-client-tools-v3.11.0-0cbc58b-linux-64bit.tar.gz
 sudo mv openshift-origin-client-tools-v3.11.0-0cbc58b-linux-64bit/oc openshift-origin-client-tools-v3.11.0-0cbc58b-linux-64bit/kubectl /usr/local/bin/
 
 # Replace ip with IP of your VM
-oc cluster up --routing-suffix=192.168.1.74.nip.io --public-hostname=192.168.1.74 --enable=service-catalog,router,registry,web-console,persistent-volumes,rhel-imagestreams
+oc cluster up --routing-suffix=192.168.1.152.nip.io --public-hostname=192.168.1.152 --enable=service-catalog,router,registry,web-console,persistent-volumes,rhel-imagestreams
+
+
+### If something went wrong in 'oc cluster up' or you need another startup config, use this to delete an existing cluster
+# `rm -rf openshift.local.clusterup/`
 
 # More permissions for 'developer' account
 oc login -u system:admin
@@ -45,14 +49,14 @@ oc adm policy add-cluster-role-to-user cluster-admin developer
 
 ## Accessing OpenShift
 ```bash
-# Using the OpenShift-CLI "$ oc"
-# On the server where you set up OpenShift you are automatically logged in
-# More info on the CLI: https://docs.okd.io/latest/getting_started/developers_cli.html
-
-# Using Web-GUI:
-https://192.168.1.74:8443/console # use IP of your VM
+# Using the Web-GUI:
+https://192.168.1.152:8443/console # use IP of your VM
 
 # More info on the Web-GUI: https://docs.okd.io/latest/getting_started/developers_console.html
+
+# Using the OpenShift-CLI `oc` from your own computer
+# On the server where you set up OpenShift you are automatically logged in
+# More info on the CLI: https://docs.okd.io/latest/getting_started/developers_cli.html
 ```
 
 ## Take a look at the OpenShift projects
@@ -75,11 +79,11 @@ oc project myproject
 oc new-app retocode/web-app:v1
 oc expose service web-app
 
-# Click on the link in the Web-GUI: http://web-app-myproject.192.168.1.74.nip.io/
+# Click on the link in the Web-GUI: http://web-app-myproject.192.168.1.152.nip.io/
 
 # Add environment variables
 oc set env dc/web-app VERSION=v1
 
 # Deployment will be triggered (see it working in the Web-GUI)
-# Check the output of http://web-app-myproject.192.168.1.74.nip.io/ again
+# Check the output of http://web-app-myproject.192.168.1.152.nip.io/ again
 ```

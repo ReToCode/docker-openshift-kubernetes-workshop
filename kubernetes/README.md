@@ -55,7 +55,7 @@ kubectl run web-app --image=retocode/web-app:v1 --port=3000
 kubectl get pod
 
 # Expose the container
-kubectl expose deployment/web-app --type=NodePort --name=web-app
+kubectl expose pod/web-app --type=NodePort --name=web-app
 
 # Get the port
 kubectl get svc # look for 3000:30xxx/TCP entry

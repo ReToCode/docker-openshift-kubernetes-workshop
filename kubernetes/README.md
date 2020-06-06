@@ -86,7 +86,7 @@ http://192.168.1.214:8001/api/v1/namespaces/kubernetes-dashboard/services/https:
 ## Optional: NFS autoprovisioning
 You can use an existing VM for this, or create a new VM that acts as a NFS server.
 ```bash
-# ON ALL MASTER/SERVER
+# ON THE MASTER AND ALL NODES
 # install nfs-common
 sudo apt install nfs-common
 
